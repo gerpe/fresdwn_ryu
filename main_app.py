@@ -58,27 +58,13 @@ class SimpleSwitch12(app_manager.RyuApp):
         actions = [ofp_parser.OFPActionOutput(ofp.OFPP_FLOOD)]
         # out = ofp_parser.OFPPacketOut(datapath=dp, in_port=1, actions=actions)
 
-        #for i in range(0, 65535):
-        #    out = ofp_parser.OFPExperimenter(datapath=dp,
         out = ofp_parser.OFPExperimenter(datapath=dp,
-                                                     #flags=0,
-                                                     # experimenter=of_common.NX_EXPERIMENTER_ID,
-                                                     #experimenter=0x4f4e4600,
                                                      experimenter=0x00000005,
-                                                   #  experimenter=0x002320,
-                                                     #experimenter=0xff000005,
-                                                     #experimenter=999,
-                                                     #exp_type=0xffff,
-                                                     exp_type=1,
-                                                     #exp_type=65535,
-                                                     #exp_type=i,
+                                                     exp_type=20,
                                                      data=bytearray())
         dp.send_msg(out)
         time.sleep(.3)
         self.__sent_packets.append(out)
-       #     dp.send_msg(out)
-       #     time.sleep(.3)
-       #     self.__sent_packets.append(out)
 
     @set_ev_cls(ofp_event.EventOFPHello, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
     def _hello_handler(self, ev):
