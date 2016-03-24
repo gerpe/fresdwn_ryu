@@ -12,6 +12,7 @@ from ryu.ofproto.ofproto_v1_0 import NXM_OF_ETH_TYPE
 from ryu.topology import event, switches
 from ryu.ofproto import oxm_fields as oxm
 import time
+import json
 
 class SimpleSwitch12(app_manager.RyuApp):
     OFP_VERSIONS = [ofp.OFP_VERSION, ofproto_v1_0.OFP_VERSION]
@@ -57,11 +58,12 @@ class SimpleSwitch12(app_manager.RyuApp):
                                                   port=ev.datapath.address[1]))
         actions = [ofp_parser.OFPActionOutput(ofp.OFPP_FLOOD)]
         # out = ofp_parser.OFPPacketOut(datapath=dp, in_port=1, actions=actions)
-
+        data = json.dumps( {"comprimento":"Bom dia","hora":10,"minuto":34})
+	    data = data + bytearray (1398 - len(data))
         out = ofp_parser.OFPExperimenter(datapath=dp,
                                                      experimenter=0x00000005,
                                                      exp_type=20,
-                                                     data=bytearray())
+                                                     data=bytearray(data))
         dp.send_msg(out)
         time.sleep(.3)
         self.__sent_packets.append(out)
