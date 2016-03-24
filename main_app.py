@@ -71,8 +71,9 @@ class SimpleSwitch13(app_manager.RyuApp):
     #def _connectionUp_handler(self, ev):
     #    pass
 
-    @set_ev_cls(ofp_event.EventOFPStateChange, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
-    def _state_cange(self, ev):
+    #@set_ev_cls(ofp_event.EventOFPStateChange, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
+    @set_ev_cls(ofp_event.EventOFPStateChange, [CONFIG_DISPATCHER])
+    def _state_change(self, ev):
         dp = ev.datapath
         print("OFPStateChange {ip}:{port}".format(ip=ev.datapath.address[0],
                                                   port=ev.datapath.address[1]))
@@ -94,9 +95,9 @@ class SimpleSwitch13(app_manager.RyuApp):
         # print("OFPHello {ip}:{port}".format(ip=ev.datapath.address[0],
         #                                           port=ev.datapath.address[1]))
 
-    @set_ev_cls(ofp_event.EventOFPErrorMsg, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
-    def _error_message_handler(self, ev):
-        pass
+    #@set_ev_cls(ofp_event.EventOFPErrorMsg, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
+    #def _error_message_handler(self, ev):
+    #    pass
     #
     # @set_ev_cls(ofp_event.EventOFPEchoRequest, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
     # def _echo_request_handler(self, ev):
