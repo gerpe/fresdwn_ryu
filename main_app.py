@@ -1,19 +1,18 @@
+import json
+import time
+
 from ryu.base import app_manager
 from ryu.controller import ofp_event
-from ryu.controller.handler import MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER
+from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER
+from ryu.controller.handler import HANDSHAKE_DISPATCHER
 from ryu.controller.handler import set_ev_cls
-from ryu.ofproto import ofproto_v1_0, ofproto_v1_3 as ofp
-from ryu.lib.packet import packet
-from ryu.lib.packet import ethernet
 from ryu.lib.packet import ether_types
+from ryu.lib.packet import ethernet
+from ryu.lib.packet import packet
+from ryu.ofproto import ofproto_v1_3 as ofp
+from ryu.ofproto import ofproto_v1_3
 from ryu.ofproto import ofproto_v1_3_parser as ofp_parser
-from ryu.ofproto import ofproto_common as of_common
-from ryu.ofproto.ofproto_v1_0 import NXM_OF_ETH_TYPE
 from ryu.topology import event, switches
-from ryu.ofproto import oxm_fields as oxm
-import time
-import json
-
 
 
 class SimpleSwitch13(app_manager.RyuApp):
