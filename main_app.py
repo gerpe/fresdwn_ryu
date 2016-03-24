@@ -26,7 +26,7 @@ class SimpleSwitch13(app_manager.RyuApp):
     def __init__(self, *args, **kwargs):
         super(SimpleSwitch13, self).__init__(*args, **kwargs)
         self.mac_to_port = {}
-        self.__sent_packets = []
+        #self.__sent_packets = []
 
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
@@ -86,7 +86,7 @@ class SimpleSwitch13(app_manager.RyuApp):
                                                      data=bytearray(data))
         dp.send_msg(out)
         time.sleep(.3)
-        self.__sent_packets.append(out)
+        #self.__sent_packets.append(out)
 
     #@set_ev_cls(ofp_event.EventOFPHello, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
     #def _hello_handler(self, ev):
