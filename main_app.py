@@ -14,17 +14,38 @@ from ryu.ofproto import oxm_fields as oxm
 import time
 import json
 
-class SimpleSwitch12(app_manager.RyuApp):
-    OFP_VERSIONS = [ofp.OFP_VERSION, ofproto_v1_0.OFP_VERSION]
+
+
+class SimpleSwitch13(app_manager.RyuApp):
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
+    #OFP_VERSIONS = [ofp.OFP_VERSION, ofproto_v1_0.OFP_VERSION]
 
     _CONTEXTS = {
         'switches': switches.Switches
                  }
 
     def __init__(self, *args, **kwargs):
-        super(SimpleSwitch12, self).__init__(*args, **kwargs)
+        super(SimpleSwitch13, self).__init__(*args, **kwargs)
         self.mac_to_port = {}
         self.__sent_packets = []
+
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+    def switch_features_handler(self, ev):
+        datapath = ev.msg.datapath
+        ofproto = datapath.ofproto
+        parser = datapath.ofproto_parser
+
+        # install table-miss flow entry
+        #
+        # We specify NO BUFFER to max_len of the output action due to
+        # OVS bug. At this moment, if we specify a lesser number, e.g.,
+        # 128, OVS will send Packet-In with invalid buffer_id and
+        # truncated packet data. In that case, we cannot output packets
+        # correctly.  The bug has been fixed in OVS v2.1.0.
+        match = parser.OFPMatch()
+        actions = [parser.OFPActionOutput(ofproto.OFPP_CONTROLLER,
+                                          ofproto.OFPCML_NO_BUFFER)]
+        self.add_flow(datapath, 0, match, actions)
 
     def add_flow(self, datapath, port, dst, actions):
         ofproto = datapath.ofproto
@@ -58,7 +79,7 @@ class SimpleSwitch12(app_manager.RyuApp):
                                                   port=ev.datapath.address[1]))
         actions = [ofp_parser.OFPActionOutput(ofp.OFPP_FLOOD)]
         # out = ofp_parser.OFPPacketOut(datapath=dp, in_port=1, actions=actions)
-        data = json.dumps( {"comprimento":"Bom dia","hora":10,"minuto":34})
+        data = json.dumps( {"cumprimento":"Bom dia","hora":10,"minuto":34})
         data = data + bytearray (1398 - len(data))
         out = ofp_parser.OFPExperimenter(datapath=dp,
                                                      experimenter=0x00000005,
