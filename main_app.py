@@ -88,9 +88,9 @@ class SimpleSwitch13(app_manager.RyuApp):
         time.sleep(.3)
         self.__sent_packets.append(out)
 
-    @set_ev_cls(ofp_event.EventOFPHello, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
-    def _hello_handler(self, ev):
-        pass
+    #@set_ev_cls(ofp_event.EventOFPHello, [MAIN_DISPATCHER, CONFIG_DISPATCHER, HANDSHAKE_DISPATCHER])
+    #def _hello_handler(self, ev):
+    #    pass
         # print("OFPHello {ip}:{port}".format(ip=ev.datapath.address[0],
         #                                           port=ev.datapath.address[1]))
 
