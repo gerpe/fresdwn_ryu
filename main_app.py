@@ -63,13 +63,13 @@ class SimpleSwitch13(app_manager.RyuApp):
             flags=0, match=match, instructions=inst)
         datapath.send_msg(mod)
 
-    @set_ev_cls(event.EventLinkRequest, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
-    def _request_handler(self, ev):
-        pass
+    #@set_ev_cls(event.EventLinkRequest, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
+    #def _request_handler(self, ev):
+    #    pass
 
-    @set_ev_cls(event.EventSwitchEnter, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
-    def _connectionUp_handler(self, ev):
-        pass
+    #@set_ev_cls(event.EventSwitchEnter, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
+    #def _connectionUp_handler(self, ev):
+    #    pass
 
     @set_ev_cls(ofp_event.EventOFPStateChange, [MAIN_DISPATCHER, CONFIG_DISPATCHER])
     def _state_cange(self, ev):
